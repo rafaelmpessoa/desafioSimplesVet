@@ -18,6 +18,8 @@ Monza, é dona de um abrigo de animais e precisa de uma sistema para cadastrar o
   * nome
   * situação - [ATI - Ativo, INA - Inativo]
 
+Para atender a este desafio você deverá criar uma aplicação em php apenas com os endpoints da api, uma app em vue que será o frontend da aplicação (não precisa se preocupar com menu ou autenticação) e uma estruta de views, procedures e funções no banco de banco de dados.
+
 * App vue
   * Listagem de animais
     * Cada animal deve ser exibido em um card com seu nome, sexo, idade, número do chip, se está vivo ou não (caso morto o card fica esmaecido) e um botão de editar
@@ -41,13 +43,14 @@ Monza, é dona de um abrigo de animais e precisa de uma sistema para cadastrar o
 
 ### Instruções para entrega
 
+* Prazo até 25/02/2019 às 23:59.
 * Fazer um clone do projeto
 * Gerar dump do banco de dados e colocar na pasta db
 * Gerar um build da app vue na pasta `web/public/app`
 * Escrever no readme instruções para rodar sua aplicação
 * Responder o e-mail com o link do repositório
 * Não obrigatório, mas se quiser ir além:
-  * Hospedar aplicação em algum servidor e enviar a url junto com e-mail;
+  * Hospedar aplicação em algum servidor e enviar a url junto com e-mail (fazer o deploy da pasta web);
   * Não é obrigatório usar nenhum framework frontend, mas se a interface estiver intuitiva, agradável e responsiva você ganhará pontos.
   * Ainda não temos uma cultura forte de testes automatizados, então se sua aplicação tiver algum teste será bom.
 
