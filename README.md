@@ -18,7 +18,7 @@ Monza, é dona de um abrigo de animais e precisa de uma sistema para cadastrar o
   * nome
   * situação - [ATI - Ativo, INA - Inativo]
 
-Para atender a este desafio você deverá criar uma aplicação em php apenas com os endpoints da api, uma app em vue que será o frontend da aplicação (não precisa se preocupar com menu ou autenticação) e uma estruta de views, procedures e funções no banco de banco de dados.
+Para atender a este desafio você deverá criar uma aplicação em php apenas com os endpoints da api (usamos o framework slim e já montamos uma pequena estrutura para você), uma app em vue que será o frontend da aplicação (não precisa se preocupar com menu ou autenticação) e uma estruta de views, procedures e funções no banco de banco de dados.
 
 * App vue
   * Listagem de animais
