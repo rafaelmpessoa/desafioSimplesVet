@@ -1,28 +1,28 @@
-#Entrega Desafio Simples Vet Fullstack 2019
+# Entrega Desafio Simples Vet Fullstack 2019
 
-![Alt Text](https://tenor.com/view/oscars-gif-7890177)
+![oscars-gif-7890177](https://tenor.com/view/oscars-gif-7890177.gif)
 
-##Demo
+## Demo
 
 http://simples-vet.s3-website.us-east-2.amazonaws.com/
 
-##Getting Started
+## Getting Started
 Essas instruções são para fazer um cópia do projeto na máquina local para desenvolvimento e testes.
 
 ```
 git clone https://github.com/rafaelmpessoa/desafioSimplesVet.git
 ```
 
-##Pré-requisito
+## Pré-requisito
 
 node >= v8.12.0
 vue >= 3.0.0
 mysql >= 5.6
 php >= 7.2.3
 
-##Instalação
+## Instalação
 
-###Backend Node
+### Backend Node
 
 Dentro da pasta /api execute:
 ```
@@ -35,7 +35,7 @@ node index.js
 ```
 Pronto, Api no Ar!
 
-###Frontend
+### Frontend
 
 Dentro da pasta /front execute:
 ```
@@ -49,7 +49,7 @@ yarn serve
 Pronto, Front no Ar!
 
 
-###Backend PHP
+### Backend PHP
 
 Not done yet!
 
@@ -65,4 +65,4 @@ php -S localhost:8080 -t public
 Pronto, Api no Ar!
 
 
-###Well Done!
+### Well Done!
