@@ -41,8 +41,8 @@
                     row
                     @change="onChangeKindOfPet"
                   >
-                    <v-radio label="Cachorro" value="1"></v-radio>
-                    <v-radio label="Gato" value="2"></v-radio>
+                    <v-radio label="Cachorro" :value="1"></v-radio>
+                    <v-radio label="Gato" :value="2"></v-radio>
                   </v-radio-group>
                 </v-flex>
                 <v-flex xs12>
@@ -90,24 +90,28 @@
 <script>
 import axios from 'axios'
 import { baseApiUrl, showError } from "@/global";
+import {mapState} from 'vuex';
 
 export default {
+  computed: mapState(["selectedPet"]),
   data() {
     return {
       isOpen: false,
-      pet: {},
       mode: "new",
-      racas: []
+      racas: [],
+      pet: {},
+      objRacas: []
     };
   },
   methods: {
     openModal() {
+      this.$refs.form.resetValidation()
       this.isOpen = true;
     },
     closeModal() {
         this.isOpen = false;
         this.$refs.form.resetValidation()
-        this.pet = {};
+        this.$store.commit('setPet',{})
     },
     save() {
         const isValid = this.$refs.form.validate();
@@ -115,19 +119,40 @@ export default {
 
         const method = this.mode === 'new' ? 'post' : 'put'
 
-        this.$emit('pushPet',this.pet)
-        this.closeModal()
+        this.pet.dtBorn = this.pet.dtBorn.substring(2,4) + '-' + this.pet.dtBorn.substring(0,2) + '-' + this.pet.dtBorn.substring(4,8) //Formatar para Data
+        if(this.pet.dtDeath) this.pet.dtDeath = this.pet.dtDeath.substring(2,4) + '-' + this.pet.dtDeath.substring(0,2) + '-' + this.pet.dtDeath.substring(4,8) //Formatar para Data
+        
+        axios[method]
+          (`${baseApiUrl}/animais`,this.pet)
+          .then(res => {
+            this.$toasted.global.defaultSuccess();
+            this.$emit('loadPets')
+           // this.closeModal()
+          }).catch(showError)  
     },
     loadRacas(filter) {
-        const objRacas = [{id:"1",raca:'Dog 1',especie:'1'},{id:"2",raca:'Dog 2',especie:'1'},{id:"3",raca:'Gato 1',especie:'2'}]
-        this.racas = objRacas.filter(e => e.especie === filter)
+      axios.
+        get(`${baseApiUrl}/racas?situacao=ativo`)
+        .then(res => {
+          this.objRacas = res.data
+        })      
+    },
+    filterRacas(filter) {
+      this.racas = this.objRacas.filter(e => e.kindOfPet === filter)
     },
     onChangeKindOfPet(){
         const filter = this.pet.kindOfPet
         this.pet.raca = null
-        this.loadRacas(filter)
+        this.filterRacas(filter)
     }
-  }
+  },watch: {
+    selectedPet(val) {
+      this.pet = val
+      this.filterRacas(val.kindOfPet)
+    }
+  },mounted() {
+    this.loadRacas()
+  },
 };
 </script>
 

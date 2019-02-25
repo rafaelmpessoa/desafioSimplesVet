@@ -1,57 +1,79 @@
 <template>
   <v-layout>
     <v-toolbar color="amber" app absolute clipped-left>
-      <v-text-field
-        solo-inverted
-        flat
-        hide-details
-        label="Search"
-        prepend-inner-icon="search"
-        v-model="search"
-      ></v-text-field>
+      <v-layout align-center>
+        <v-flex xs7 md10>
+          <v-text-field
+            solo-inverted
+            flat
+            hide-details
+            label="Search"
+            prepend-inner-icon="search"
+            v-model="search"
+          ></v-text-field>
+        </v-flex>
+        <v-flex xs5 md2 pa-3 mt-3>
+          <v-switch @change="filterListOfPets" ml-2 v-model="isAdocao" label="Pets para adoção"></v-switch>
+        </v-flex>
+      </v-layout>
     </v-toolbar>
+
     <v-content>
       <v-container fluid fill-height class="grey lighten-4">
-        <v-layout justify-center align-center>
-          <v-flex shrink></v-flex>
+        <v-layout col wrap>
+          <pet-cards ref="petCards"></pet-cards>
           <v-flex class="fab-container">
-            <v-btn color="blue" dark meddium fab>
+            <v-btn v-show="selectedPet.id > 0" color="blue" dark meddium fab @click="editPet">
               <v-icon>edit</v-icon>
             </v-btn>
-            <v-btn color="green" dark meddium fab @click="openModal">
+            <v-btn color="green" dark meddium fab @click="newPet">
               <v-icon>add</v-icon>
             </v-btn>
           </v-flex>
         </v-layout>
       </v-container>
-      <pet-form-modal v-on:pushPet="pushPet" ref="PetForm"></pet-form-modal>
+      <pet-form-modal v-on:loadPets="loadPets" ref="PetForm"></pet-form-modal>
     </v-content>
   </v-layout>
 </template>
 
 <script>
-import PetFormModal from '../pet/PetFormModal.vue';
-
+import PetFormModal from "../pet/PetFormModal.vue";
+import PetCards from "../pet/PetCards.vue";
+import { mapState } from "vuex";
 export default {
-  components: {PetFormModal},
+  computed: mapState(["selectedPet"]),
+  components: { PetFormModal, PetCards },
   data() {
     return {
       search: null,
       petModal: false,
-      petList:[]
+      petList: [],
+      isAdocao: false
     };
   },
   watch: {
-    search(val) {}
-  },
-  methods: {
-    openModal() {
-      this.$refs.PetForm.openModal()
-    },
-    pushPet(pet) {
-      this.petList.push(pet)
+    search() {
+      this.filterListOfPets()
     }
   },
+  methods: {
+    editPet() {
+      this.$refs.PetForm.openModal();
+      this.$refs.PetForm.mode = "edit";
+    },
+    newPet() {
+      this.$store.commit("setPet", {});
+      this.$refs.PetForm.openModal();
+      this.$refs.PetForm.mode = "new";
+    },
+    filterListOfPets(){
+      this.$refs.petCards.filterListOfPets(this.search,this.isAdocao)
+    },
+    loadPets() {
+      this.$refs.petCards.loadPets()
+    }
+  }
 };
 </script>
 
