@@ -1,4 +1,4 @@
-<template>
+'<template>
   <v-layout row justify-center>
     <v-dialog v-model="isOpen" persistent max-width="600px">
       <v-form ref="form">
@@ -53,6 +53,7 @@
                     :rules="[v => !!v || 'Campo obrigatório']"
                     item-text="raca"
                     item-value="id"
+                    return-object
                   ></v-select>
                 </v-flex>
                 <v-flex xs12>
@@ -123,11 +124,11 @@ export default {
         if(this.pet.dtDeath) this.pet.dtDeath = this.pet.dtDeath.substring(2,4) + '-' + this.pet.dtDeath.substring(0,2) + '-' + this.pet.dtDeath.substring(4,8) //Formatar para Data
         
         axios[method]
-          (`${baseApiUrl}/animais`,this.pet)
+          (`${baseApiUrl}/animais${method === 'put' ? '/' + this.pet.id : ''}`,this.pet)
           .then(res => {
             this.$toasted.global.defaultSuccess();
             this.$emit('loadPets')
-           // this.closeModal()
+            this.closeModal()
           }).catch(showError)  
     },
     loadRacas(filter) {
@@ -149,6 +150,7 @@ export default {
     selectedPet(val) {
       this.pet = val
       this.filterRacas(val.kindOfPet)
+
     }
   },mounted() {
     this.loadRacas()

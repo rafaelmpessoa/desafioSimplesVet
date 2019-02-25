@@ -25,7 +25,6 @@ export default {
         .then(res => {
           this.listOfPets = res.data
           this.filteredListOfPets = this.listOfPets
-          console.log(this.filteredListOfPets)
         }).catch(showError)
       
     },

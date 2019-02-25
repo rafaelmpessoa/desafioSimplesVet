@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export const baseApiUrl = 'http://localhost:3000/api'
+export const baseApiUrl = 'http://simplesvet-api.us-east-2.elasticbeanstalk.com/api'
 
 export function showError(e){
     if(e && e.response && e.response.data) {

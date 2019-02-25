@@ -21,7 +21,7 @@
           <v-flex>
             <v-card-text>
               <ul>
-                <li>{{pet.gender}}.</li>
+                <li>{{gender}}.</li>
                 <li>{{pet.age}} Anos.</li>
                 <li>{{pet.chip}}.</li>
                 <li>{{pet.dtDeath ? "Falecido" : "Vivo"}}.</li>
@@ -49,6 +49,9 @@ export default {
         (objClass["grey lighten-2"] = !this.pet.isAlive);
       }
       return objClass;
+    },
+    gender() {
+      return this.pet.gender === "M" ?  'Macho' : 'Fêmea'
     }
   }
 };

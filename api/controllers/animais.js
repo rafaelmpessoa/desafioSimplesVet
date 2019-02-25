@@ -11,8 +11,9 @@ exports.getAllAnimais = (req,res) => {
                 id: e.codRaca,
                 raca: e.raca
             }
-            console.log(e)
-            e.isAlive = e.isAlive === 'true' ? false : true
+            e.isAlive = e.isAlive === 'true' ? false : true;
+            e.kindOfPet = parseInt(e.kindOfPet);
+            e.gender = e.gender.substring(0,1);
             return e
         })
 
@@ -30,7 +31,8 @@ exports.updateAnimal = (req,res) => {
     const pet = req.body
     pet.dtBorn = formatDate(pet.dtBorn)
     pet.dtDeath = pet.dtDeath ? "'" + formatDate(pet.dtDeath) + "'" : null
-    const query = `call sp_animal_insert('${pet.name}','${pet.gender}',${pet.kindOfPet},'${pet.chip}','${pet.dtBorn}',${pet.dtDeath},${pet.raca})`
+    const query = `call sp_animal_update(${animalId},'${pet.name}','${pet.gender}',${pet.kindOfPet},'${pet.chip}','${pet.dtBorn}',${pet.dtDeath},${pet.raca.id})`
+
     connection.query(query,(err,result) => {
         if(err) return res.status(404).send(err.message)
         return res.status(200).send(result)
@@ -41,11 +43,10 @@ exports.updateAnimal = (req,res) => {
 
 exports.postAnimal = (req,res) => {
     const pet = req.body
-    console.log(pet)
     pet.dtBorn = formatDate(pet.dtBorn)
     pet.dtDeath = pet.dtDeath ? "'" + formatDate(pet.dtDeath) + "'" : null
     const imgPath = Math.floor(Math.random() * 5) + 1  
-    const query = `call sp_animal_insert('${pet.name}','${pet.gender}',${pet.kindOfPet},'${pet.chip}','${pet.dtBorn}',${pet.dtDeath},${pet.raca},${imgPath})`
+    const query = `call sp_animal_insert('${pet.name}','${pet.gender}',${pet.kindOfPet},'${pet.chip}','${pet.dtBorn}',${pet.dtDeath},${pet.raca.id},${imgPath})`
     connection.query(query,(err,result) => {
         if(err) return res.status(404).send(err.message)
         return res.status(200).send(result)
